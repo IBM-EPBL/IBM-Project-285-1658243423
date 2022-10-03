@@ -10,6 +10,6 @@
 ## Team members 
 
 ##### Team Lead - Rajeshkumar S
-##### M1 Lead   - Ramya S
-##### M2 Lead   - Ramachandramoorthy K B
+##### M1 Lead   - Ramachandramoorthy K B
+##### M2 Lead   - Ramya S
 ##### M3 Lead   - Umapathi K
