@@ -2,6 +2,7 @@ from flask import Flask,redirect, render_template, request,session
 from flask_session import Session
 from connection import connect
 from datetime import datetime
+from sendgridMail import mailtest_request
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config["SESSION_PERMANENT"] = False
@@ -58,6 +59,10 @@ def Signup():
 def Dashboard():
     connect.getIncome(session["userid"],con)
     connect.getexpense(session["userid"],con)
+    if(int(session["expe"])>int(session["Userbudget"])):
+        mail = session["userid"]+"@gmail.com"
+        # print(mail)
+        mailtest_request(mail)
     return render_template('Home.html')
 
 #Add Income page
@@ -238,4 +243,4 @@ def logout():
     return redirect('/')
 
 if __name__=='__main__':
-    app.run(debug = True)
+    app.run(host='0.0.0.0',port=5000,debug = True)

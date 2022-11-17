@@ -28,25 +28,29 @@
 
             <div class="col-xl-6 mb-3">
                 <!-- document.location.href = 'detailExpense.php?code_expense=<?= $expense['code_expense']; ?>'; -->
-                <div class="card list-expense" onclick="alert('{{expense.EXPENSEID}}')">
-                    <div class="card-body" data-toggle="tooltip" data-placement="top" title={{expense.EXPENSENOTE}}>
-                        <div class="row d-flex align-items-center">
-                            <div class="col-2 text-center">
-                                <span>
-                                    <i class="fas fa-Entertainment"></i>
-                                </span>
-                            </div>
-                            <div class="col-5">
-                                <h6 class="card-text text-start">{{expense.EXPENSECATEGORY}}</h6>
-                                <p class="card-text text-start text-secondary" style="font-size: 14px;">
-                                    {{expense.EXPENSEDATE}}</p>
-                            </div>
-                            <div class="col-5">
-                                <p class="card-text text-danger text-end"><b>IDR {{expense.EXPENSEAMOUNT}}</b></p>
+                <div class="card list-expense">
+                    <div onclick='window.location.href = "./showexpense?expenseid={{expense.EXPENSEID}}";'>
+                        <input type="hidden" name="expenseid" value="{{expense.EXPENSEID}}">
+                        <div class="card-body" data-toggle="tooltip" data-placement="top" title={{expense.EXPENSENOTE}}>
+                            <div class="row d-flex align-items-center">
+                                <div class="col-2 text-center">
+                                    <span>
+                                        <i class="fas fa-Entertainment"></i>
+                                    </span>
+                                </div>
+                                <div class="col-5">
+                                    <h6 class="card-text text-start">{{expense.EXPENSECATEGORY}}</h6>
+                                    <p class="card-text text-start text-secondary" style="font-size: 14px;">
+                                        {{expense.EXPENSEDATE}}</p>
+                                </div>
+                                <div class="col-5">
+                                    <p class="card-text text-danger text-end"><b>IDR {{expense.EXPENSEAMOUNT}}</b></p>
+                                </div>
                             </div>
                         </div>
-
                     </div>
+                    <button class="card-text btn btn-danger text-center"
+                        onclick='window.location.href = "./deleteexpense?expenseid={{expense.EXPENSEID}}";'>Delete</button>
                 </div>
             </div>
 

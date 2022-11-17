@@ -10,7 +10,7 @@ def Connection():
         print ("Unable to connect: ", ibm_db.conn_errormsg())
 
 def getincomevalues(id,conn):
-    sql = "SELECT * FROM XJK42376.INCOME WHERE INCOMEID = '"+id+"'"
+    sql = "SELECT * FROM INCOME WHERE INCOMEID = '"+id+"'"
     lis={}
     try:
         stmt = ibm_db.exec_immediate(conn, sql)
@@ -25,7 +25,7 @@ def getincomevalues(id,conn):
     return lis
 
 def getexpensevalues(id,conn):
-    sql = "SELECT * FROM XJK42376.EXPENSE WHERE EXPENSEID = '"+id+"'"
+    sql = "SELECT * FROM EXPENSE WHERE EXPENSEID = '"+id+"'"
     lis={}
     try:
         stmt = ibm_db.exec_immediate(conn, sql)
@@ -63,7 +63,7 @@ def getIncome(userid,conn):
     incomevalues = {"Salery":0,"Profit":0,"Bonus":0,"Other":0}
     sum = 0
     try:
-        sql = "SELECT * FROM XJK42376.INCOME WHERE UUSERID = '"+userid+"' ORDER BY  INCOMEDATE ASC"
+        sql = "SELECT * FROM INCOME WHERE UUSERID = '"+userid+"' ORDER BY  INCOMEDATE ASC"
         stmt = ibm_db.exec_immediate(conn, sql)
 
         dictionary = ibm_db.fetch_assoc(stmt)
@@ -92,7 +92,7 @@ def profile(userid,name,email,phone,password,budget,con):
     budget = str(budget)
     columns = '"UNAME","UEMAIL","UPHONE","UPASSWORD","UUSERID","UBUDGET"'
     val = "'"+name+"','"+email+"','"+phone+"','"+password+"','"+userid+"','"+budget+"'"
-    sql = 'UPDATE XJK42376.USER SET (' + columns + ') = ('+val+') WHERE UUSERID ='+"'"+userid+"'"
+    sql = 'UPDATE USER SET (' + columns + ') = ('+val+') WHERE UUSERID ='+"'"+userid+"'"
     # print(sql)
     try:
         stmt = ibm_db.prepare(con, sql)
@@ -131,7 +131,7 @@ def getexpense(userid,conn):
     sum = 0
     expensevalues = {"Entertainment":0,"Food":0,"Fuel":0,"Other":0}
     try:
-        sql = "SELECT * FROM XJK42376.EXPENSE WHERE UUSERID = '"+userid+"' ORDER BY EXPENSEDATE ASC"
+        sql = "SELECT * FROM EXPENSE WHERE UUSERID = '"+userid+"' ORDER BY EXPENSEDATE ASC"
         stmt = ibm_db.exec_immediate(conn, sql)
         dictionary = ibm_db.fetch_assoc(stmt)
         while dictionary != False:
@@ -169,7 +169,7 @@ def Signup(name,email,phone,password,conn):
 
     columns = '"UNAME","UEMAIL","UPHONE","UPASSWORD","UUSERID","UBUDGET"'
     val = "'"+name+"','"+email+"','"+phone+"','"+password+"','"+userid+"','"+budget+"'"
-    sql = 'Insert into XJK42376.USER(' + columns + ') values('+val+')'
+    sql = 'Insert into USER(' + columns + ') values('+val+')'
     try:
         stmt = ibm_db.prepare(conn, sql)
         ibm_db.execute(stmt)
@@ -185,7 +185,7 @@ def Signup(name,email,phone,password,conn):
 
 def Signin(email,password,conn):
 
-    sql = "SELECT * FROM XJK42376.USER WHERE UEMAIL = '"+email+"' AND UPASSWORD = '"+password+"'"
+    sql = "SELECT * FROM USER WHERE UEMAIL = '"+email+"' AND UPASSWORD = '"+password+"'"
     arr=[]
     try:
        stmt = ibm_db.exec_immediate(conn, sql)
@@ -215,7 +215,7 @@ def Signin(email,password,conn):
 def Addincome(userid,amount,incomeid,date,note,category,catid,conn):
     columns = '"UUSERID","INCOMEAMOUNT","INCOMEID","INCOMEDATE","INCOMENOTE","INCOMECATEGORY","CATOGERYNAME"'
     val = "'"+userid+"','"+amount+"','"+incomeid+"','"+date+"','"+note+"','"+category+"','"+catid+"'"
-    sql = 'Insert into XJK42376.INCOME(' + columns + ') values('+val+')'
+    sql = 'Insert into INCOME(' + columns + ') values('+val+')'
     try:
         stmt = ibm_db.prepare(conn, sql)
         ibm_db.execute(stmt)
@@ -228,7 +228,7 @@ def Addincome(userid,amount,incomeid,date,note,category,catid,conn):
 def Addexpense(userid,amount,expenseid,date,note,category,catid,conn):
     columns = '"UUSERID","EXPENSEAMOUNT","EXPENSEID","EXPENSEDATE","EXPENSENOTE","EXPENSECATEGORY","CATOGERYNAME"'
     val = "'"+userid+"','"+amount+"','"+expenseid+"','"+date+"','"+note+"','"+category+"','"+catid+"'"
-    sql = 'Insert into XJK42376.EXPENSE(' + columns + ') values('+val+')'
+    sql = 'Insert into EXPENSE(' + columns + ') values('+val+')'
     try:
         stmt = ibm_db.prepare(conn, sql)
         ibm_db.execute(stmt)
@@ -241,7 +241,7 @@ def Addexpense(userid,amount,expenseid,date,note,category,catid,conn):
 def updateincome(userid,amount,incomeid,date,note,catogery,catid,con):
     columns = '"UUSERID","INCOMEAMOUNT","INCOMEID","INCOMEDATE","INCOMENOTE","INCOMECATEGORY","CATOGERYNAME"'
     val = "'"+userid+"','"+amount+"','"+incomeid+"','"+date+"','"+note+"','"+catogery+"','"+catid+"'"
-    sql = 'UPDATE XJK42376.INCOME SET (' + columns + ') = ('+val+') WHERE UUSERID ='+"'"+userid+"' AND INCOMEID ='"+incomeid+"'"
+    sql = 'UPDATE INCOME SET (' + columns + ') = ('+val+') WHERE UUSERID ='+"'"+userid+"' AND INCOMEID ='"+incomeid+"'"
     try:
         stmt = ibm_db.prepare(con, sql)
         ibm_db.execute(stmt)
@@ -253,7 +253,7 @@ def updateincome(userid,amount,incomeid,date,note,catogery,catid,con):
 
 
 def deleteincome(incomeid, userid,conn):
-    sql="DELETE FROM XJK42376.INCOME WHERE INCOMEID='"+incomeid+"' AND UUSERID='"+userid+"';"
+    sql="DELETE FROM INCOME WHERE INCOMEID='"+incomeid+"' AND UUSERID='"+userid+"';"
     try:
         stmt = ibm_db.prepare(conn, sql)
         ibm_db.execute(stmt)
@@ -266,7 +266,7 @@ def deleteincome(incomeid, userid,conn):
 def updateexpense(userid,amount,expenseid,date,note,catogery,catid,con):
     columns = '"UUSERID","EXPENSEAMOUNT","EXPENSEID","EXPENSEDATE","EXPENSENOTE","EXPENSECATEGORY","CATOGERYNAME"'
     val = "'"+userid+"','"+amount+"','"+expenseid+"','"+date+"','"+note+"','"+catogery+"','"+catid+"'"
-    sql = 'UPDATE XJK42376.EXPENSE SET (' + columns + ') = ('+val+') WHERE UUSERID ='+"'"+userid+"' AND EXPENSEID ='"+expenseid+"'"
+    sql = 'UPDATE EXPENSE SET (' + columns + ') = ('+val+') WHERE UUSERID ='+"'"+userid+"' AND EXPENSEID ='"+expenseid+"'"
     try:
         stmt = ibm_db.prepare(con, sql)
         ibm_db.execute(stmt)
@@ -276,7 +276,7 @@ def updateexpense(userid,amount,expenseid,date,note,catogery,catid,con):
 
 
 def deleteexpense(expenseid, userid,conn):
-    sql="DELETE FROM XJK42376.EXPENSE WHERE EXPENSEID='"+expenseid+"' AND UUSERID='"+userid+"';"
+    sql="DELETE FROM EXPENSE WHERE EXPENSEID='"+expenseid+"' AND UUSERID='"+userid+"';"
     try:
         stmt = ibm_db.prepare(conn, sql)
         ibm_db.execute(stmt)
